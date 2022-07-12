@@ -6,110 +6,66 @@ max_integer = __import__('6-max_integer').max_integer
 
 
 class TestMaxInteger(unittest.TestCase):
+    """unittest class for max_integer"""
+    def test_module_docstring(self):
+        """Tests for module docsting"""
+        m = __import__('6-max_integer').__doc__
+        self.assertTrue(len(m) > 1)
 
-    """ Class for unittest of max_integer function"""
+    def test_function_docstring(self):
+        """Tests for funstion docstring"""
+        f = max_integer.__doc__
+        self.assertTrue(len(f) > 1)
 
-    def test_max_intlist(self):
-        """ Test when a list of integers is passed """
-        self.assertEqual(max_integer([1, 2, 3, 4]), 4)
+    def test_empty_list(self):
+        """Tests for empty list []"""
+        e = []
+        self.assertIsNone(max_integer(e))
 
-    def test_max_intlist_neg(self):
-        """ Test when a list of neg integers is passed """
-        self.assertEqual(max_integer([-1, -2, -3, -4]), -1)
+    def test_no_args(self):
+        """Tests for no arguments passed to func"""
+        self.assertIsNone(max_integer())
 
-    def test_max_intlist_mix(self):
-        """ Test when a list of neg and pos integers is passed """
-        self.assertEqual(max_integer([-1, 2, 3, -4]), 3)
+    def test_one_element(self):
+        """Tests for only one number in the list"""
+        o = [1]
+        self.assertEqual(max_integer(o), 1)
 
-    def test_max_floatlist(self):
-        """ Test when a list of floats is passed """
-        self.assertEqual(max_integer([1.1, 2.5, 3.1, 4.9]), 4.9)
+    def test_positive_end(self):
+        """Tests for all positive with max at end"""
+        e = [2, 10, 8, 36, 14, 50]
+        self.assertEqual(max_integer(e), 50)
 
-    def test_max_floatlist_neg(self):
-        """ Test when a list of neg floats is passed """
-        self.assertEqual(max_integer([-1.05, -2.2, -3.5, -4.0]), -1.05)
+    def test_positive_middle(self):
+        """Tests for all positive with max in middle"""
+        m = [2, 10, 8, 360, 14, 50]
+        self.assertEqual(max_integer(m), 360)
 
-    def test_max_floatlist_mix(self):
-        """ Test when a list of neg and pos floats is passed """
-        self.assertEqual(max_integer([-1.8, 2.1, 3.6, -4.1]), 3.6)
+    def test_positive_beginning(self):
+        """Tests for all positive with max at beginning"""
+        b = [200, 10, 8, 36, 14, 50]
+        self.assertEqual(max_integer(b), 200)
 
-    def test_max_intfloatlist_mix(self):
-        """ Test when a list of neg and pos integers and floats is passed """
-        self.assertEqual(max_integer([-1, 2.1, 3, -4.1]), 3)
+    def test_one_negative(self):
+        """Tests for list with one negative number"""
+        on = [200, 10, 8, -36, 14, 50]
+        self.assertEqual(max_integer(on), 200)
 
-    def test_max_empty(self):
-        """ Test when an empty list function is passed """
-        self.assertEqual(max_integer([]), None)
+    def test_all_negative(self):
+        """Tests for list with all negative numbers"""
+        n = [-6, -50, -75, -1, -100]
+        self.assertEqual(max_integer(n), -1)
 
-    def test_max_singleint(self):
-        """ Test when a single int is passed as list """
-        self.assertEqual(max_integer([5]), 5)
-
-    def test_max_singlefloat(self):
-        """ Test when a single int is passed as list """
-        self.assertEqual(max_integer([5.5]), 5.5)
-
-    def test_max_repeatedint(self):
-        """ Test when a single int is passed as list """
-        self.assertEqual(max_integer([5, 5, 5, 5]), 5)
-
-    def test_max_repeatedfloat(self):
-        """ Test when a single int is passed as list """
-        self.assertEqual(max_integer([5.5, 5.5, 5.5]), 5.5)
-
-    def test_max_comprenhension(self):
-        """ Test when a list is created through comprenhension"""
-        self.assertEqual(max_integer([i for i in range(10)]), 9)
-
-    def test_max_intfloattuple_mix(self):
-        """ Test when a tuple of neg and pos integers and floats is passed """
-        self.assertEqual(max_integer((-1, 2.1, 3, -4.1)), 3)
-
-    def test_max_emptytuple(self):
-        """ Test when an empty tuple is passed """
-        self.assertEqual(max_integer(()), None)
-
-    def test_max_nolistint(self):
-        """ Test when an integer is passed to function """
+    def test_none(self):
+        """Tests for passing none as argument"""
         with self.assertRaises(TypeError):
-            max_integer(2)
+            max_integer(None)
 
-    def test_max_nolistfloat(self):
-        """ Test when a float is passed to function """
+    def test_non_int_arg(self):
+        """Tests for a non-int type in list"""
+        string = [1, 2, "Hello", 4, 5]
         with self.assertRaises(TypeError):
-            max_integer(2.0)
+            max_integer(string)
 
-    def test_max_nolistset(self):
-        """ Test when a float is passed to function """
-        with self.assertRaises(TypeError):
-            max_integer({1, 2})
-
-    def test_max_dict(self):
-        """ Test when an dictionary with keys in order is passed """
-        self.assertEqual(max_integer({0: -3, 1: 1.5, 2: 5}), 5)
-
-    def test_max_nodict(self):
-        """ Test when a dict is passed to function with keys not in order """
-        with self.assertRaises(KeyError):
-            max_integer({1: 2})
-
-    def test_max_emptydict(self):
-        """ Test when an empty dictionary is passed """
-        self.assertEqual(max_integer(()), None)
-
-    def test_max_matrix(self):
-        """ Test when a matrix  dictionary is passed """
-        self.assertEqual(max_integer([[1, 2], [3, 4]]), [3, 4])
-
-    def test_max_char(self):
-        """ Test when a list of chars is passed """
-        self.assertEqual(max_integer(["1", "2", "a", "4"]), 'a')
-
-    def test_max_str(self):
-        """ Test when a string is passed """
-        self.assertEqual(max_integer("Holberton"), 't')
-
-    def test_max_liststromt(self):
-        """ Test when a list with number and string is passed """
-        with self.assertRaises(TypeError):
-            max_integer([1, "2"])
+if __name__ == "__main__":
+    unittest.main()

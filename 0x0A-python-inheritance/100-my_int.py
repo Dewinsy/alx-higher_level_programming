@@ -1,16 +1,19 @@
 #!/usr/bin/python3
 """
-class
-My int
+Contains the class MyInt
 """
 
 
 class MyInt(int):
-    """ Change eq and ne"""
-    def __eq__(self, num):
-        """ Change == to !="""
-        return int(self) != int(num)
+    """rebel version of an integer, perfect for opposite day!"""
+    def __new__(cls, *args, **kwargs):
+        """create a new instance of the class"""
+        return super(MyInt, cls).__new__(cls, *args, **kwargs)
 
-    def __ne__(self, num):
-        """ Change != to =="""
-        return int(self) == int(num)
+    def __eq__(self, other):
+        """what was != is now =="""
+        return int(self) != other
+
+    def __ne__(self, other):
+        """what was == is now !="""
+        return int(self) == other

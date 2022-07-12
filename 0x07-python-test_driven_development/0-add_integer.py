@@ -1,21 +1,18 @@
 #!/usr/bin/python3
-def add_integer(a, b=98):
-    """
-    This function sum a and b.
-    Return the result int datatype.
-    Raise TypeError if data is diferrent that int.
-    """
-    if not (isinstance(a, int) or isinstance(a, float)):
+"""
+This is the "0-add_integer" module.
+The 0-add_integer module supplies one function, add_integer(a, b).
+"""
+
+
+def add_integer(a, b):
+    """Return the addition of two numbers."""
+    if type(a) is not int and type(a) is not float:
         raise TypeError("a must be an integer")
-
-    if not (isinstance(b, int) or isinstance(b, float)):
+    if type(b) is not int and type(b) is not float:
         raise TypeError("b must be an integer")
-
-    if isinstance(a, float) or isinstance(a, int):
+    if type(a) is float:
         a = int(a)
-
-    if isinstance(b, float) or isinstance(b, int):
+    if type(b) is float:
         b = int(b)
-
-    if isinstance(a, int) and isinstance(b, int):
-        return int(a + b)
+    return a + b

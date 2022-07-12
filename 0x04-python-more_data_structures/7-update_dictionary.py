@@ -1,9 +1,7 @@
 #!/usr/bin/python3
+# 7-update_dictionary.py
+
 def update_dictionary(a_dictionary, key, value):
-    if key not in a_dictionary:
-        a_dictionary[key] = value
-    else:
-        for a in a_dictionary:
-            if a == key:
-                a_dictionary[a] = value
-    return a_dictionary
+    """Replace or add key/value pairs in a dictionary."""
+    a_dictionary[key] = value
+    return (a_dictionary)

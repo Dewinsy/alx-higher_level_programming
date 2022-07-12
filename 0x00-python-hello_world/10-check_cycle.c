@@ -1,30 +1,32 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "lists.h"
-
 /**
- * check_cycle - count the cycle
- * @list: input
- * Return: 0 if ok and 1 if not
+ * check_cycle - cycle tortoise and hare
+ * @list: pointer to head
+ * Return: 1 on success, 0 otherwise.
  */
-
 int check_cycle(listint_t *list)
 {
+	listint_t *tortoise;
+	listint_t *hare;
 
-	listint_t *current;
-
-	if (list)
-	{
-		while (list != NULL)
-		{
-			current = list;
-			list = list->next;
-			if (current <= list)
-				return (1);
-		}
+	if (list == NULL)
 		return (0);
+	tortoise = list;
+	hare = list;
+	while (hare->next != NULL && hare->next->next != NULL)
+	{
+		tortoise = tortoise->next;
+		hare = hare->next->next;
+		if (tortoise == hare)
+		{
+			tortoise = list;
+			while (tortoise != hare)
+			{
+				tortoise = tortoise->next;
+				hare = hare->next;
+			}
+			return (1);
+		}
 	}
 	return (0);
-
 }
-

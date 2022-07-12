@@ -1,23 +1,25 @@
 #!/usr/bin/python3
-"""This is  the "text_indentation" function.
-The text_indentation function formating text. For example,
->>> text_indentation(Non autem hoc: igitur ne illud)
+"""
+This is the "5-test_indentation" module.
+The 5-text_indentation module supplies one function, text_indentation(text).
 """
 
 
 def text_indentation(text):
-    """This function formating text.
-    Return the result in new text.
-    Raise Error if data is diferrent."""
+    """splits a text into lines along "?", ":", "." followed by 2 new lines"""
     if type(text) is not str:
         raise TypeError("text must be a string")
-    x = 0
-    check = False
-    for i in range(len(text)):
-        if text[i] in [".", ":", "?"]:
-            print(text[x : i + 1])
-            print()
-            x = i + 2
-            bool = True
-    if i + 1 == len(text) and bool is False:
-        print(text)
+    flag = 0
+    for a in text:
+        if flag == 0:
+            if a == ' ':
+                continue
+            else:
+                flag = 1
+        if flag == 1:
+            if a == '?' or a == '.' or a == ':':
+                print(a)
+                print()
+                flag = 0
+            else:
+                print(a, end="")

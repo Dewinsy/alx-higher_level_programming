@@ -1,15 +1,14 @@
 #!/usr/bin/python3
-"""This is  the "matrix_divided" function.
-The matrix_divided function divided matrix. For example,
->>> matrix_divided([[1, 2, 3],[4, 5, 6]], 3)
-[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
 """
+This is the "3-say_my-name" module.
+The 3-say_my_name  module supplies one function, say_my_name.
+"""
+
+
 def say_my_name(first_name, last_name=""):
-    """This function divided a matrix.
-    Return the result in new matrix.
-    Raise Error if data is diferrent."""
-    if not (isinstance(first_name, str)):
+    """Prints "My name is" followed by the first name and optional last name"""
+    if type(first_name) is not str:
         raise TypeError("first_name must be a string")
-    if not (isinstance(last_name, str)):
+    if type(last_name) is not str:
         raise TypeError("last_name must be a string")
-    print("My name is {} {}".format(first_name, last_name))
+    print("My name is", first_name, last_name)

@@ -1,19 +1,39 @@
 #!/usr/bin/python3
-class Rectangle:
-    """ Init Class width set 0 and height set 0"""
+""" Module that defines a 'Rectangle'
+"""
+
+
+class Rectangle():
+    """An empty definition of a 'Rectangle'
+    """
+    width = True
+    height = True
+
     def __init__(self, width=0, height=0):
-        """ Constructor """
-        self.__width = width
-        self.__height = height
+
+        """ Instantiates a 'Rectangle'
+        """
+        self.width = width
+        self.height = height
+
+    def __str__(self):
+
+        """Sets the print behavior of the Rectangle object.
+        """
+        if self.height and self.width:
+            return '\n'.join(["#" * self.width] * self.height)
+        return ""
 
     @property
     def width(self):
-        """ Width Getter """
+        """ to retrieve it
+        """
         return self.__width
 
     @width.setter
     def width(self, value):
-        """ Width Setter """
+        """ to set it
+        """
         if not isinstance(value, int):
             raise TypeError("width must be an integer")
         if value < 0:
@@ -22,12 +42,14 @@ class Rectangle:
 
     @property
     def height(self):
-        """ Height Getter """
+        """ to retrieve it
+        """
         return self.__height
 
     @height.setter
     def height(self, value):
-        """ Height Setter """
+        """ to set it
+        """
         if not isinstance(value, int):
             raise TypeError("height must be an integer")
         if value < 0:
@@ -35,24 +57,13 @@ class Rectangle:
         self.__height = value
 
     def area(self):
-        """ Calculate Area """
-        return (self.__height * self.__width)
+        """ that returns the rectangle area
+        """
+        return self.width * self.height
 
     def perimeter(self):
-        """ Calculate Perimeter """
-        if self.__height == 0 or self.__width == 0:
-            return 0
-        else:
-            return ((self.__height * 2) + (self.__width * 2))
-
-    def __str__(self):
-        """ Returns the Rectangle for printing """
-        recstr = ""
-        if self.width == 0 or self.height == 0:
-            return (recstr)
-        else:
-            for i in range(self.height):
-                recstr += "{}".format('#'*self.__width)
-                if i != (self.height - 1):
-                    recstr += "\n"
-        return recstr
+        """ that returns the perimeter of the rectangle
+        """
+        if self.width and self.height:
+            return (self.width + self.height) * 2
+        return 0
