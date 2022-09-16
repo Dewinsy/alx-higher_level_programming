@@ -1,34 +1,26 @@
 #!/usr/bin/python3
-"""Start link class to table in database
-"""
-if __name__ == '__main__':
-    import sys
-    from relationship_state import Base, State
-    from relationship_city import City
-    from sqlalchemy import (create_engine)
-    from sqlalchemy.orm import sessionmaker
+"""Create the State “California” with the City
+“San Francisco” from the database hbtn_0e_100_usa"""
+from sys import argv
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
+from relationship_city import City
+from relationship_state import Base, State
 
-    sql_username = sys.argv[1]
-    sql_pwd = sys.argv[2]
-    db_name = sys.argv[3]
+if __name__ == "__main__":
+    """lists all State objects from the database hbtn_0e_6_usa"""
 
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-        sql_username, sql_pwd, db_name), pool_pre_ping=True)
-
-    Base.metadata.create_all(engine)
+    url = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
+    engine = create_engine(url.format(argv[1], argv[2], argv[3]),
+                           pool_pre_ping=True)
 
     Session = sessionmaker(bind=engine)
+    Base.metadata.create_all(engine)
+
     session = Session()
 
-    new_state = "California"
-    new_city = "San Francisco"
-
-    n_state = State(name=new_state)
-    session.add(n_state)
-    session.commit()
-
-    n_city = City(name=new_city, state=n_state)
-    session.add(n_city)
+    new_data = State(name='California', cities=[City(name='San Francisco')])
+    session.add(new_data)
     session.commit()
 
     session.close()

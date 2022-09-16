@@ -1,24 +1,26 @@
 #!/usr/bin/python3
-"""
-Update the table
-"""
-if __name__ == '__main__':
-    import sys
-    from model_state import Base, State
-    from sqlalchemy.orm import sessionmaker
-    from sqlalchemy import (create_engine)
+"""changes the name of a State object from the database hbtn_0e_6_usa"""
+from model_state import Base, State
+from sys import argv
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
 
-    sql_username = sys.argv[1]
-    sql_pwd = sys.argv[2]
-    db_name = sys.argv[3]
 
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-        sql_username, sql_pwd, db_name), pool_pre_ping=True)
+if __name__ == "__main__":
+    """changes the name of a State object from the database hbtn_0e_6_usa"""
+
+    url = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
+    engine = create_engine(url.format(argv[1], argv[2], argv[3]),
+                           pool_pre_ping=True)
 
     Session = sessionmaker(bind=engine)
+    Base.metadata.create_all(engine)
+
     session = Session()
-    query = session.query(State).filter_by(id=2)
-    query.update({State.name: "New Mexico"}, synchronize_session=False)
+    # HERE: no SQL query, only objects!
+    get_objetc = session.query(State).get(2)
+
+    get_objetc.name = 'New Mexico'
     session.commit()
 
     session.close()

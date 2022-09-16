@@ -1,25 +1,26 @@
 #!/usr/bin/python3
-"""Start link class to table in database
-"""
-if __name__ == '__main__':
-    import sys
-    from model_state import Base, State
-    from sqlalchemy.orm import sessionmaker
-    from sqlalchemy import (create_engine)
+"""lists all State objects from the database hbtn_0e_6_usa"""
+from model_state import Base, State
+from sys import argv
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
 
-    sql_username = sys.argv[1]
-    sql_pwd = sys.argv[2]
-    db_name = sys.argv[3]
 
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'.format(
-        sql_username, sql_pwd, db_name), pool_pre_ping=True)
+if __name__ == "__main__":
+    """lists all State objects from the database hbtn_0e_6_usa"""
+
+    url = 'mysql+mysqldb://{}:{}@localhost:3306/{}'
+    engine = create_engine(url.format(argv[1], argv[2], argv[3]),
+                           pool_pre_ping=True)
 
     Session = sessionmaker(bind=engine)
+    Base.metadata.create_all(engine)
+
     session = Session()
-    state = session.query(State).first()
-    if state:
-        print("{}: {}".format(state.id, state.name))
+    # HERE: no SQL query, only objects!
+    states = session.query(State).order_by(State.id).first()
+    if states:
+        print("{}: {}".format(states.id, states.name))
     else:
         print("Nothing")
-
     session.close()

@@ -1,40 +1,25 @@
 #!/usr/bin/python3
-"""All cities by state"""
+"""takes in the name of a state as an argument and
+lists all cities of that state, using the database
+hbtn_0e_4_usa"""
 import MySQLdb
-import sys
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(host="localhost",
-                         port=3306,
-                         user=sys.argv[2],
-                         passwd=sys.argv[1],
-                         db=sys.argv[3])
+if __name__ == '__main__':
+    """takes in the name of a state as an argument and
+    lists all cities of that state, using the database
+    hbtn_0e_4_usa"""
 
-    cur = db.cursor()
+    con = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                          passwd=argv[2], db=argv[3], charset="utf8")
+    cur = con.cursor()
+    cur.execute("SELECT cities.name FROM cities, states WHERE \
+states.name = %s AND cities.state_id = states.id ORDER BY \
+cities.id ASC", (argv[4],))
+    rows = cur.fetchall()
 
-    # Execute the query
-    query = """
-    SELECT cities.name
-    FROM cities
-    JOIN states ON states.id = cities.state_id
-    WHERE states.name = %s
-    ORDER BY cities.id ASC;
-    """
-    cur.execute(query, (sys.argv[4], ))
+    to_list = list(map(''.join, rows))
+    print(', '.join(to_list))
 
-    my_list = []
-    str1 = ""
-    for row in cur.fetchall():
-        my_list.append(row[0])
-
-    for i in range(len(my_list)):
-        if i == len(my_list) - 1:
-            str1 += my_list[i]
-        else:
-            str1 += "{}, ".format(my_list[i])
-
-    print(str1)
-
-    # Close the connection
     cur.close()
-    db.close()
+    con.close()

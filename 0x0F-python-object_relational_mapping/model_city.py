@@ -1,17 +1,15 @@
 #!/usr/bin/python3
-"""MOduke for citiess table"""
+"""python file that contains the class definition
+of a City and"""
+from sqlalchemy import Column, Integer, String, ForeignKey
 from model_state import Base, State
-from sqlalchemy import ForeignKey, Column, Integer, String
 
 
 class City(Base):
-    """The city class for this table"""
+    """Class City"""
     __tablename__ = 'cities'
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, nullable=False, unique=True,
+                autoincrement=True, primary_key=True)
     name = Column(String(128), nullable=False)
-    state_id = Column(Integer, ForeignKey("states.id"), nullable=False)
-
-    def __repr__(self):
-        """Object Representation"""
-        return "<Cities(name =' %s')>" % (self.name)
+    state_id = Column(Integer, ForeignKey("states.id"), nullable=False,)

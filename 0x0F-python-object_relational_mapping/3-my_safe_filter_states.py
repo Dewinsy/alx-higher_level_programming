@@ -1,24 +1,25 @@
 #!/usr/bin/python3
-"""SQL Injection"""
+"""that takes in arguments and displays all values
+in the states table of hbtn_0e_0_usa where
+name matches the argument. But this time, write
+one that is safe from MySQL injections!"""
 import MySQLdb
-import sys
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(host="localhost",
-                         port=3306,
-                         user=sys.argv[2],
-                         passwd=sys.argv[1],
-                         db=sys.argv[3])
+if __name__ == '__main__':
+    """that takes in arguments and displays all values
+    in the states table of hbtn_0e_0_usa where
+    name matches the argument. But this time, write
+    one that is safe from MySQL injections!"""
 
-    cur = db.cursor()
+    con = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                          passwd=argv[2], db=argv[3], charset="utf8")
 
-    # Execute the query
-    query = """SELECT id, name FROM states WHERE name = %s\
-    COLLATE latin1_general_cs ORDER BY id ASC;"""
-    cur.execute(query, (sys.argv[4], ))
-
-    for row in cur.fetchall():
+    cur = con.cursor()
+    cur.execute("SELECT * FROM states WHERE name = %s ORDER BY \
+states.id ASC", (argv[4],))
+    rows = cur.fetchall()
+    for row in rows:
         print(row)
-
     cur.close()
-    db.close()
+    con.close()

@@ -1,23 +1,20 @@
 #!/usr/bin/python3
-"""Filter states"""
+"""lists all states with a name starting with N (upper N)
+from the database hbtn_0e_0_usa"""
 import MySQLdb
-import sys
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(host="localhost",
-                         port=3306,
-                         user=sys.argv[2],
-                         passwd=sys.argv[1],
-                         db=sys.argv[3])
+if __name__ == '__main__':
+    """lists all states with a name starting with N (upper N)
+        from the database hbtn_0e_0_usa"""
 
-    cur = db.cursor()
-
-    # Execute the query
-    cur.execute('SELECT id, name FROM states\
-    WHERE name COLLATE latin1_general_cs LIKE "N%" ORDER BY states.id ASC;')
-
+    con = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                          passwd=argv[2], db=argv[3], charset="utf8")
+    cur = con.cursor()
+    cur.execute("""SELECT * FROM states WHERE name LIKE BINARY 'N%' \
+ORDER BY states.id ASC""")
     for row in cur.fetchall():
         print(row)
 
     cur.close()
-    db.close()
+    con.close()

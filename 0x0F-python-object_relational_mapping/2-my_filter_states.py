@@ -1,23 +1,22 @@
 #!/usr/bin/python3
-"""Filter states by user inpu"""
+"""takes in an argument and displays all values in the states
+table of hbtn_0e_0_usa where name matches the argument."""
 import MySQLdb
-import sys
+from sys import argv
 
-if __name__ == "__main__":
-    db = MySQLdb.connect(host="localhost",
-                         port=3306,
-                         user=sys.argv[2],
-                         passwd=sys.argv[1],
-                         db=sys.argv[3])
+if __name__ == '__main__':
+    """ltakes in an argument and displays all values in the states
+    table of hbtn_0e_0_usa where name matches the argument."""
 
-    cur = db.cursor()
-
-    # Execute the query
-    query = "SELECT id, name FROM states WHERE name='{}'\
-    COLLATE latin1_general_cs ORDER BY states.id ASC;".format(sys.argv[4])
-    cur.execute(query)
-    for row in cur.fetchall():
-        print(row)
+    con = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                          passwd=argv[2], db=argv[3], charset="utf8")
+    cur = con.cursor()
+    cur.execute("SELECT * FROM states WHERE name = '{}' ORDER BY \
+states.id ASC".format(argv[4],))
+    rows = cur.fetchall()
+    for row in rows:
+        if (row[1] in argv[4]):
+            print(row)
 
     cur.close()
-    db.close()
+    con.close()
